@@ -6,7 +6,15 @@ class Hero:
 
     race_attributes = {"Resilience": 0, "Strength": 0, "Agility": 0}
     clas_attributes = {"Sword": 0, "Axe": 0, "Mace": 0, "Light armour": 0, "Heavy armour": 0}
-    inventory = {"Small health": 0, "Large health": 0, "Strength": 0}
+    inventory = {
+        "Small health": 0,
+        "Large health": 0,
+        "Strength": 0,
+        "Weapon": False,
+        "Helmet": False,
+        "Cuirass": False,
+        "Boots": False
+    }
 
     #eveything else defined in the constructor
 
@@ -54,8 +62,26 @@ class Hero:
 
     #inventory function
 
-    def inventory(weapon, armour, potion):
-        pass
+    def inventory(self, item):
+        if isinstance(item, Weapon):
+            self.inventory["Weapon"] = item
+        elif isinstance(item, Armor):
+            if item["Part"] == "Cuirass":
+                self.inventory["Cuirass"] = item
+            elif item["Part"] == "Boots":
+                self.inventory["Boots"] = item
+            elif item["Part"] == "Helmet":
+                self.inventory["Helmet"] = item
+        elif isinstance(item, Potion):
+            if item.name == "Small health potion":
+                self.inventory["Small health"] += 1
+            elif item.name == "Large health potion":
+                self.inventory["Large health"] += 1
+            elif item.name == "Stremgth potion":
+                self.inventory["Strength"] += 1
+
+
+
     
     #attack function
 
@@ -168,6 +194,9 @@ class Weapon:
             self.weapon_stats["Type"] = "mace"
             self.weapon_stats["Damage"] = 5
             self.weapon_stats["Speed"] = 2
+
+weapon_1 = Weapon("Short sword")
+print(type(weapon_1))
 
 #setup of the armor class
 
