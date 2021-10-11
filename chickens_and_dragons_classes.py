@@ -44,18 +44,21 @@ class Hero:
             self.clas_attributes["Mace"] = 3
             self.clas_attributes["Light armour"] = 3
             self.clas_attributes["Heavy armour"] = 3
+            self.inventory["Weapon"] = "Hatchet"
         elif clas == "Paladin":
             self.clas_attributes["Sword"] = 3
             self.clas_attributes["Axe"] = 1
             self.clas_attributes["Mace"] = 5
             self.clas_attributes["Light armour"] = 1
             self.clas_attributes["Heavy armour"] = 5
+            self.inventory["Weapon"] = "Club"
         elif clas == "Scout":
             self.clas_attributes["Sword"] = 5
             self.clas_attributes["Axe"] = 3
             self.clas_attributes["Mace"] = 1
             self.clas_attributes["Light armour"] = 4
             self.clas_attributes["Heavy armour"] = 2
+            self.inventory["Weapon"] = "Short sword"
 
     def __repr__(self):
         return self.name + " the " + self.clas
@@ -64,7 +67,14 @@ class Hero:
 
     def inventory(self, item):
         if isinstance(item, Weapon):
-            self.inventory["Weapon"] = item
+            print("Your current weapon is " + self.inventory["Weapon"])
+            print("Do you want substitute it for the new weapon instead? y/n")
+            user_answer = input()
+            if user_answer == "y":
+                self.inventory["Weapon"] = item
+                print("Congratuation! Your new weapon is a " + item)
+            if user_answer == "n":
+                print("You decided to kee your old weapon instead. May it continue to werve you well.")
         elif isinstance(item, Armor):
             if item["Part"] == "Cuirass":
                 self.inventory["Cuirass"] = item
