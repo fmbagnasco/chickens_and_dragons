@@ -1,6 +1,6 @@
 from chickens_and_dragons_classes import *
 
-text_unroll("Welcome to Chickens & Dragons,\nthe only game that takes place in the\nwonderfult Chickens & Dragons Universe!")
+text_unroll("Welcome to Chickens & Dragons,\nthe only game that takes place in the\nwonderful Chickens & Dragons Universe!")
 text_unroll("\nPlease select a race for your hero!\nThe choices are:\n- Human\n- Orc\n- Elf\nMake sure you spell the race correctly!\n")
 
 user_race = input()

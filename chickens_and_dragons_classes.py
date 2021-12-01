@@ -52,15 +52,15 @@ class Hero:
         #different classes and races defined here
 
         if race == "Human":
-            self.race_attributes["Resilence"] = 4
+            self.race_attributes["Resilience"] = 4
             self.race_attributes["Strength"] = 3
             self.race_attributes["Agility"] = 3
         elif race == "Orc":
-            self.race_attributes["Resilence"] = 4
+            self.race_attributes["Resilience"] = 4
             self.race_attributes["Strength"] = 5
             self.race_attributes["Agility"] = 1
         elif race == "Elf":
-            self.race_attributes["Resilence"] = 3
+            self.race_attributes["Resilience"] = 3
             self.race_attributes["Strength"] = 2
             self.race_attributes["Agility"] = 5
 
@@ -92,12 +92,12 @@ class Hero:
         self.max_hp = (self.race_attributes["Resilience"] + self.race_attributes["Strength"]) * 10
 
     def __repr__(self):
-        return self.name + " the " + self.clas
+        return self.name + " the " + self.race + " " + self.clas
 
     #movement function
 
     def movement(self, hero, distance):
-        monster = ""
+        monster = 0
         monster_chances = random.randint(1, 100)
 
         if monster_chances < 51:
@@ -209,20 +209,16 @@ class Hero:
         if self.inventory["Weapon"].weapon_stats["Type"] == "Mace":
             proficiency = self.clas_attributes["Mace"]
 
-        attack_damage = ((proficiency * 2) + (self.race_attributes["Strength"] * 2) + self.inventory["Weapon"].weapon_stats["Damage"]) / 3
-        
-        new_monster_hp = monster.monster_attributes["HP"] - attack_damage
+        attack_damage = ((proficiency * 2) + (self.race_attributes["Strength"] * 2) + self.inventory["Weapon"].weapon_stats["Damage"]) / 2
 
-        attack_coefficient = ((proficiency * 2) + (self.race_attributes["Agility"] * 2) + self.inventory["Weapon"].weapon_stats["Speed"]) / 3
+        attack_coefficient = ((proficiency * 2) + (self.race_attributes["Agility"] * 2) + self.inventory["Weapon"].weapon_stats["Speed"]) / 2
 
-        chances = (attack_coefficient * 0.25 * 100) / monster.monster_attributes["Defence"]
+        chances = (attack_coefficient * 25) / monster.monster_attributes["Defence"]
 
         if random.randint(1, 100) < chances:
-            monster_hp = new_monster_hp
+            return attack_damage
         else:
-            monster_hp = monster.monster_attributes["HP"]
-
-        return monster_hp
+            return 0
 
     #flee function
 
@@ -296,9 +292,9 @@ class Hero:
                     self.hp = self.max_hp
                 self.inventory["Large health"] -= 1
                 text_unroll("\nThe potions gives you your streagth back!")
-                text_unroll("You now have {} health points".format(self.hp))
+                text_unroll("\nYou now have {} health points".format(self.hp))
                 text_unroll("\nYou still have " + str(self.inventory["Large health"]) + " large health potions.")
-        if self.inventory["Small health"] != 0 and self.inventory["Large health"] == 0:
+        elif self.inventory["Small health"] != 0 and self.inventory["Large health"] == 0:
             text_unroll("\nYou only have small health potions.\nYou take one!")
             self.hp += 20
             if self.hp <= self.max_hp - 20:
@@ -307,9 +303,9 @@ class Hero:
                 self.hp = self.max_hp
             self.inventory["Small health"] -= 1
             text_unroll("\nThe potions gives you your streagth back!")
-            text_unroll("You now have {} health points".format(self.hp))
+            text_unroll("\nYou now have {} health points".format(self.hp))
             text_unroll("\nYou still have " + str(self.inventory["Small health"]) + " small health potions.")
-        if self.inventory["Large health"] != 0 and self.inventory["Small health"] == 0:
+        elif self.inventory["Large health"] != 0 and self.inventory["Small health"] == 0:
             text_unroll("\nYou only have large health potions.\nYou take one!")
             self.hp += 50
             if self.hp <= self.max_hp - 50:
@@ -320,7 +316,7 @@ class Hero:
             text_unroll("\nThe potions gives you your streagth back!")
             text_unroll("You now have {} health points".format(self.hp))
             text_unroll("\nYou still have " + str(self.inventory["Large health"]) + " large health potions.")
-        if self.inventory["Large health"] == 0 and self.inventory["Small health"] == 0:
+        elif self.inventory["Large health"] == 0 and self.inventory["Small health"] == 0:
             text_unroll("\nYou do not have health potions!")
 
     #end of combat function
@@ -328,9 +324,7 @@ class Hero:
     def end_of_combat(self, monster):
         text_unroll("\nThe monster dropped a " + str(monster.dropped_item) + "!")
 
-        item = monster.dropped_item
-
-        self.inventory_check(item)
+        self.inventory_check(monster.dropped_item)
 
 #setup of the Monster class
 
@@ -347,7 +341,7 @@ class Monster:
 
         #calculate drop rates
 
-        dropped_item = ""
+        dropped_item = 0
 
         drop_calculator_1 = random.randint(1, 10)
         drop_calculator_2 = random.randint(1, 9)
@@ -447,39 +441,39 @@ class Weapon:
 
         if name == "Short sword":
             self.weapon_stats["Type"] = "Sword"
-            self.weapon_stats["Damage"] = 2
+            self.weapon_stats["Damage"] = 4
             self.weapon_stats["Speed"] = 5
         elif name == "Long sword":
             self.weapon_stats["Type"] = "Sword"
-            self.weapon_stats["Damage"] = 3
+            self.weapon_stats["Damage"] = 6
             self.weapon_stats["Speed"] = 4
         elif name == "Claymore":
             self.weapon_stats["Type"] = "Sword"
-            self.weapon_stats["Damage"] = 5
+            self.weapon_stats["Damage"] = 10
             self.weapon_stats["Speed"] = 2
         elif name == "Hatchet":
             self.weapon_stats["Type"] = "Axe"
-            self.weapon_stats["Damage"] = 2
+            self.weapon_stats["Damage"] = 4
             self.weapon_stats["Speed"] = 5
         elif name == "Battle axe":
             self.weapon_stats["Type"] = "Axe"
-            self.weapon_stats["Damage"] = 4
+            self.weapon_stats["Damage"] = 8
             self.weapon_stats["Speed"] = 3
         elif name == "Two-handed axe":
             self.weapon_stats["Type"] = "Axe"
-            self.weapon_stats["Damage"] = 5
+            self.weapon_stats["Damage"] = 10
             self.weapon_stats["Speed"] = 2
         elif name == "Club":
             self.weapon_stats["Type"] = "Mace"
-            self.weapon_stats["Damage"] = 3
+            self.weapon_stats["Damage"] = 6
             self.weapon_stats["Speed"] = 4
         elif name == "War mace":
             self.weapon_stats["Type"] = "Mace"
-            self.weapon_stats["Damage"] = 4
+            self.weapon_stats["Damage"] = 8
             self.weapon_stats["Speed"] = 3
         elif name == "War hammer":
-            self.weapon_stats["Type"] = "mace"
-            self.weapon_stats["Damage"] = 5
+            self.weapon_stats["Type"] = "Mace"
+            self.weapon_stats["Damage"] = 10
             self.weapon_stats["Speed"] = 2
 
     def __repr__(self):
@@ -558,20 +552,20 @@ def fight(hero, enemy):
 
     while fight == True:
 
-        text_unroll("\nDo you want to attack, take a potion, or flee?\nWrite 'a' for attack, 'p' for potion, or 'f' for flee.\n")
+        text_unroll("\nDo you want to attack, take a potion, or flee?\nWrite 'a' for attack, 'p' for potion, or 'f' to flee from the fight.\n")
 
         answer = input()
 
         if answer == "a":
-            if hero.attack(enemy) < enemy.monster_attributes["HP"]:
-                damage = enemy.monster_attributes["HP"] - hero.attack(enemy)
-                enemy.monster_attributes["HP"] = hero.attack(enemy)
+            damage = hero.attack(enemy)
+            if damage > 0:
+                enemy.monster_attributes["HP"] -= damage
                 text_unroll("\nYou attack the monster!")
                 text_unroll("\nYou hit the monster!")
-                text_unroll("\nYou deal " + str(round(damage, 2)) + " damage!")
+                text_unroll("\nYou deal {} damage!".format(round(damage, 2)))
 
                 if enemy.monster_attributes["HP"] > 0:
-                    text_unroll("\nThe monster still has " + str(round(enemy.monster_attributes["HP"], 2)) + " health points!")
+                    text_unroll("\nThe monster still has {} health points!".format(round(enemy.monster_attributes["HP"], 2)))
                     text_unroll("\nNow the monster attacks you!")
                     hero.defence(enemy)
 
@@ -579,8 +573,8 @@ def fight(hero, enemy):
                     text_unroll("\nYou killed the monster!")
                     hero.end_of_combat(enemy)
                     fight = False
-            else:
-                text_unroll("\nYou missed!")
+            elif hero.attack(enemy) == 0:
+                text_unroll("\nAnd... \nYou miss!")
                 text_unroll("\nNow the monster attacks you!")
                 hero.defence(enemy)
         elif answer == "f":
