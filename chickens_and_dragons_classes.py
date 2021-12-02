@@ -165,28 +165,28 @@ class Hero:
             answer = input()
 
             if answer == "w":
-                text_unroll("\nYour current weapon is: " + str(self.inventory["Weapon"]))
+                text_unroll("\nYour current weapon is: {}".format(self.inventory["Weapon"]))
             elif answer == "b":
                 if self.inventory["Boots"] == "":
                     text_unroll("\nYou currently have no boots!\nKill monsters for a chance to get some.")
                 else:
-                    text_unroll("\nYour current boots are: " + str(self.inventory["Boots"]))
+                    text_unroll("\nYour current boots are: {}".format(self.inventory["Boots"]))
             elif answer == "c":
                 if self.inventory["Cuirass"] == "":
                     text_unroll("\nYou currently have no cuirass!\nKill monsters for a chance to get one.")
                 else:
-                    text_unroll("\nYour current cuirass is: " + str(self.inventory["Cuirass"]))
+                    text_unroll("\nYour current cuirass is: {}".format(self.inventory["Cuirass"]))
             elif answer == "h":
                 if self.inventory["Helmet"] == "":
                     text_unroll("\nYou currently have no helmet!\nKill monsters for a chance to get one.")
                 else:
-                    text_unroll("\nYour current helmet is: " + str(self.inventory["Helmet"]))
+                    text_unroll("\nYour current helmet is: {}".format(self.inventory["Helmet"]))
             elif answer == "p":
                 if self.inventory["Small health"] == 0 and self.inventory["Large health"] == 0:
                     text_unroll("\nYou currently have no health potions!\nKill monsters for a chance to get some.")
                 else:
-                    text_unroll("\nYou have: " + str(self.inventory["Small health"]) + " small health potions.")
-                    text_unroll("\nand " + str(self.inventory["Large health"]) + " large health potions.")
+                    text_unroll("\nYou have: {} small health potions.".format(self.inventory["Small health"]))
+                    text_unroll("\nand {} large health potions.".format(self.inventory["Large health"]))
             
             text_unroll("\nWould you like to check anything else? y/n\n")
             answer = input()
@@ -261,8 +261,8 @@ class Hero:
 
         if random.randint(1, 100) < chances:
             text_unroll("\nYou got hit!")
-            text_unroll("\nThe monster dealt " + str(round(monster.monster_attributes["Attack damage"], 2)) + " damage!")
-            text_unroll("\nYou have " + str(round(new_hp, 2)) + " hp!")
+            text_unroll("\nThe monster dealt {} damage!".format(round(monster.monster_attributes["Attack damage"], 2)))
+            text_unroll("\nYou have {} hp!".format(round(new_hp, 2)))
             self.hp = new_hp
         else:
             text_unroll("\nThe monster missed you!")
@@ -283,7 +283,7 @@ class Hero:
                 self.inventory["Small health"] -= 1
                 text_unroll("\nThe potions gives you your streagth back!")
                 text_unroll("You now have {} health points".format(self.hp))
-                text_unroll("\nYou still have " + str(self.inventory["Small health"]) + " small health potions.")
+                text_unroll("\nYou still have {} small health potions.".format(self.inventory["Small health"]))
             if answer == "large":
                 self.hp += 50
                 if self.hp <= self.max_hp - 50:
@@ -293,7 +293,7 @@ class Hero:
                 self.inventory["Large health"] -= 1
                 text_unroll("\nThe potions gives you your streagth back!")
                 text_unroll("\nYou now have {} health points".format(self.hp))
-                text_unroll("\nYou still have " + str(self.inventory["Large health"]) + " large health potions.")
+                text_unroll("\nYou still have {} large health potions.".format(self.inventory["Large health"]))
         elif self.inventory["Small health"] != 0 and self.inventory["Large health"] == 0:
             text_unroll("\nYou only have small health potions.\nYou take one!")
             self.hp += 20
@@ -304,7 +304,7 @@ class Hero:
             self.inventory["Small health"] -= 1
             text_unroll("\nThe potions gives you your streagth back!")
             text_unroll("\nYou now have {} health points".format(self.hp))
-            text_unroll("\nYou still have " + str(self.inventory["Small health"]) + " small health potions.")
+            text_unroll("\nYou still have {} small health potions.".format(self.inventory["Small health"]))
         elif self.inventory["Large health"] != 0 and self.inventory["Small health"] == 0:
             text_unroll("\nYou only have large health potions.\nYou take one!")
             self.hp += 50
@@ -315,14 +315,14 @@ class Hero:
             self.inventory["Large health"] -= 1
             text_unroll("\nThe potions gives you your streagth back!")
             text_unroll("You now have {} health points".format(self.hp))
-            text_unroll("\nYou still have " + str(self.inventory["Large health"]) + " large health potions.")
+            text_unroll("\nYou still have {} large health potions.".format(self.inventory["Large health"]))
         elif self.inventory["Large health"] == 0 and self.inventory["Small health"] == 0:
             text_unroll("\nYou do not have health potions!")
 
     #end of combat function
 
     def end_of_combat(self, monster):
-        text_unroll("\nThe monster dropped a " + str(monster.dropped_item) + "!")
+        text_unroll("\nThe monster dropped a {}!".format(monster.dropped_item))
 
         self.inventory_check(monster.dropped_item)
 
