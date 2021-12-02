@@ -1,5 +1,5 @@
 # chickens_and_dragons
-My Codecademy terminal game project
+My Codecademy CS101 terminal game project
 
 This is my text-based adventure.
 
