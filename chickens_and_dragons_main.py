@@ -32,6 +32,8 @@ game = True
 
 while game == True:
 
+    fights = 0
+
     text_unroll("\nWould you like to travel\nor to check your inventory?")
     text_unroll("\nWrite 't' for travel, or 'i' for inventory.\n")
 
@@ -40,21 +42,18 @@ while game == True:
     if answer == "i":
         user_hero.inventory_inquiry()
     elif answer == "t":
+        travel(user_hero)
+        fights += 1
 
-        distance = 0
+    if fights == 10:
+        text_unroll("\nCongratulations! You have defeated 10 monsters!\nIt is now time to meet the final boss!\nBe ready for glory or death!")
+        text_unroll("\nBehold Chickenator the Soulless King of Dragons")
+        fight(user_hero, Monster("Chickenator the Soulless King of Dragons"))
 
-        text_unroll("\nWhere do you want to go?\nThese are the options:")
-        text_unroll("\n-Chicken Forest, 3 leagues away\n-Dragon Lair, 5 Leagues away\n-Impervious Summit, 8 leagues away")
-        text_unroll("\nWrite 'f' for the forest, 'l' for the lair, or 's' for the summit.\n")
-
-        destination = input()
-
-        if destination == "f":
-            user_hero.movement(user_hero, 3)
-        elif destination == "l":
-            user_hero.movement(user_hero, 5)
-        elif destination == "s":
-            user_hero.movement(user_hero, 8)
+        if user_hero.hp <= 0:
+            game = False
+        else:
+            text_unroll("\nYou have defeated the final boss!\nGlory unto you forevermore!")
 
     if user_hero.hp <= 0:
         game = False

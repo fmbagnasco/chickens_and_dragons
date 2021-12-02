@@ -96,25 +96,35 @@ class Hero:
 
     #movement function
 
-    def movement(self, hero, distance):
+    def movement(self, hero, level):
         monster = 0
         monster_chances = random.randint(1, 100)
 
-        if monster_chances < 51:
-            monster = Monster("Chicken Scout")
-        elif monster_chances < 81:
-            monster = Monster("Dragon Fighter")
-        elif monster_chances < 91:
-            monster = Monster("Chicken Overlord")
-        elif monster_chances <= 100:
-            monster = Monster("Dragon Master")
+        if level == 0:
 
-        if random.randint(1, 10) > distance:
-            text_unroll("\nYou have safely reached your destination!")
-        else:
-            text_unroll("\nLooks like you have encountered a monster!")
-            text_unroll("\nA dreadful {} stands in your way!".format(monster.name))
-            fight(hero, monster)
+            if monster_chances < 61:
+                monster = Monster("Chicken Scout")
+            elif monster_chances < 91:
+                monster = Monster("Dragon Fighter")
+            elif monster_chances < 96:
+                monster = Monster("Chicken Overlord")
+            elif monster_chances <= 100:
+                monster = Monster("Dragon Master")
+
+        if level == 1:
+
+            if monster_chances < 16:
+                monster = Monster("Chicken Scout")
+            elif monster_chances < 31:
+                monster = Monster("Dragon Fighter")
+            elif monster_chances < 81:
+                monster = Monster("Chicken Overlord")
+            elif monster_chances <= 100:
+                monster = Monster("Dragon Master")
+        
+        text_unroll("\nLooks like you have encountered a monster!")
+        text_unroll("\nA dreadful {} stands in your way!".format(monster.name))
+        fight(hero, monster)
 
 
     #inventory check function
@@ -249,7 +259,7 @@ class Hero:
             if self.inventory["Boots"].armor_stats["Type"] == "Heavy":
                 armour_coefficient += self.inventory["Boots"].armor_stats["Protection"] * self.clas_attributes["Heavy armour"]
 
-        armour_coefficient /= 3
+        armour_coefficient /= 2
         
         defence_coefficient = (armour_coefficient + self.race_attributes["Agility"]) / 2
 
@@ -589,3 +599,47 @@ def fight(hero, enemy):
         if hero.hp <= 0:
             text_unroll("\nYou are dead!\nGame over!")
             fight = False
+
+def travel(hero):
+    level = 0
+
+    text_unroll("\nWhere do you want to go?\nYou can choose destinations with mostly minions,\nor destinations with a high chance of encounering a boss:")
+    text_unroll("\nWrite 'm' for minions,  or 'b' for bosses.\n")
+
+    difficulty = input()
+
+    if difficulty == "m":
+        text_unroll("\nYou chose the less risky option!\nThese are your possible destinations:")
+        text_unroll("\n- The Venomous Valley.\n- The Dangerous Dale.\n- The Frightening Forest.\n- The Grotesque Glade.\n- The Ravenous River.")
+        text_unroll("\nWrite the corresponding letter,\nv, d, f, g, or r to choose the destination.\n")
+        answer = input()
+        if answer == "v":
+            destination = "The Venomous Valley"
+        elif answer == "d":
+            destination = "The Dangerous Dale"
+        elif answer == "f":
+            destination = "The Frightening Forest"
+        elif answer == "g":
+            destination = "The Grotesque Glade"
+        elif answer == "r":
+            destination = "The Ravenous River"
+        text_unroll("You travel to the {}!".format(destination))
+        hero.movement(hero, level)
+    elif difficulty == "b":
+        level = 1
+        text_unroll("\nYou chose risk and likely death!\nThese are your possible destinations:")
+        text_unroll("\n- The Sinister Summit.\n- The Gnarled Gorge.\n- The Revolting Ravine.\n- The Daunting Desert.\n- The Vomiting Volcano.")
+        text_unroll("\nWrite the corresponding letter,\ns, g, r, d, or v to choose the destination.\n")
+        answer = input()
+        if answer == "s":
+            destination = "The Sinister Summit"
+        elif answer == "g":
+            destination = "The Gnarled Gorge"
+        elif answer == "r":
+            destination = "The Revolting Ravine"
+        elif answer == "d":
+            destination = "The Daunting Desert"
+        elif answer == "v":
+            destination = "The Vomiting Volcano"
+        text_unroll("You travel to the {}!".format(destination))
+        hero.movement(hero, level)
